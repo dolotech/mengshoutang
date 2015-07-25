@@ -1,0 +1,379 @@
+﻿Starling 框架修改
+
+1.Starling   去除帧频事件派发	
+
+ public function advanceTime(passedTime:Number):void
+        {
+            makeCurrent();
+            
+            mTouchProcessor.advanceTime(passedTime);
+//            mStage.advanceTime(passedTime);		// 注释掉			
+            mJuggler.advanceTime(passedTime);
+        }
+
+
+2.TextField  设置默认位图字体
+
+
+public function TextField(width:int, height:int, text:String, fontName:String="myFont",
+                                  fontSize:Number=12, color:uint=0x0, bold:Boolean=false)
+        {
+            mText = text ? text : "";
+            mFontSize = fontSize;
+            mColor = color;
+            mHAlign = HAlign.CENTER;
+            mVAlign = VAlign.CENTER;
+            mBorder = null;
+            mKerning = true;
+            mBold = bold;
+            mAutoSize = TextFieldAutoSize.NONE;
+            this.fontName = fontName == "" ? "myFont":fontName;
+
+
+3.StatsDisplay 去除帧频事件派发，恢复帧频观察器
+
+internal class StatsDisplay extends Sprite implements IAnimatable
+
+public function advanceTime(time:Number):void
+		{
+			mTotalTime += time;
+			mFrameCount++;
+			
+			if (mTotalTime > UPDATE_INTERVAL)
+			{
+				update();
+				mFrameCount = mTotalTime = 0;
+			}
+		}
+		
+        private function onAddedToStage():void
+        {
+            addEventListener(Event.ENTER_FRAME, onEnterFrame);
+			Starling.juggler.add(this);
+            mTotalTime = mFrameCount = 0;
+            update();
+        }
+        
+        private function onRemovedFromStage():void
+        {
+			Starling.juggler.remove(this);
+            removeEventListener(Event.ENTER_FRAME, onEnterFrame);
+        }
+
+
+5.AssetManager  添加注册音频
+
+ public function addSound(name:String, sound:Sound):void
+        {
+            log("Adding sound '" + name + "'");
+            
+            if (name in mSounds)
+                log("Warning: name was already in use; the previous sound will be replaced.");
+            SoundManager.instance.addSound(name,sound);		//   ���
+            mSounds[name] = sound;
+        }
+        
+
+6. DisplayObject  暴露mParent属性
+
+public var mParent:DisplayObjectContainer;
+
+7.DisplayObjectContainer  	添加3个优化方法	
+		public function addQuiackChild(child:DisplayObject):void{
+			if(child.mParent){
+				child.mParent.removeQuickChild(child);
+			}
+			mChildren.push(child);
+			child.mParent = this;
+		}
+		
+				
+		public function addQuiackChildAt(child:DisplayObject, index:int):DisplayObject
+		{
+			var numChildren:int = mChildren.length; 
+			
+			if (index >= 0 && index <= numChildren)
+			{
+				if(child.mParent){
+					child.mParent.removeQuickChild(child);
+				}
+				
+				if (index == numChildren) mChildren.push(child);
+				else                      mChildren.splice(index, 0, child);
+				
+				child.setParent(this);
+				child.mParent = this;
+				
+				return child;
+			}
+			else
+			{
+				throw new RangeError("Invalid child index");
+			}
+		}
+		
+		public function removeQuickChild(child:DisplayObject):void{
+			var index:int = mChildren.indexOf(child);
+			if(index != -1){
+				child.mParent = null;
+				mChildren.splice(index, 1);
+			}
+		}
+		
+			
+		public function clearChild():void{
+			var length:int = mChildren.length;
+			for (var i:int = 0; i < length; i++) {
+				mChildren[i].mParent = null;
+			}
+			mChildren.splice(0,length);
+		}
+
+8.  跳帧策略 AutoSkip
+Starling:
+
+ private  var _autoSkip:AutoSkip;
+ _autoSkip = new AutoSkip(stage);
+
+  public function render():void
+        {
+            if(_autoSkip.requestFrameSkip()) return; 
+            if (!mContextValid)
+                return;
+                
+                
+                
+ 
+ 
+ 9.  Starling 构造方法里改为 if (viewPort == null) viewPort = new Rectangle(0, 0, stage.fullScreenWidth, stage.fullScreenHeight);
+ 
+ 10.TextureAtlas
+ 
+ 	private var _XMLScale:Number = 1.0;
+
+    public function parseAtlasBytes(bytes:ByteArray):void {
+        var scale:Number = mAtlasTexture.scale;
+        _XMLScale = bytes.readFloat();
+        var len:int = bytes.readInt();
+
+        for (var i:int = 0; i < len; i++) {
+            var name:String = bytes.readUTF();
+            var x:Number = bytes.readFloat() / scale;
+            var y:Number = bytes.readFloat() / scale;
+            var width:Number = bytes.readFloat() / scale;
+            var height:Number = bytes.readFloat() / scale;
+            var frameX:Number = bytes.readFloat() / scale;
+            var frameY:Number = bytes.readFloat() / scale;
+            var frameWidth:Number = bytes.readFloat() / scale;
+            var frameHeight:Number = bytes.readFloat() / scale;
+
+            var region:Rectangle = new Rectangle(x, y, width, height);
+            var frame:Rectangle = frameWidth > 0 && frameHeight > 0 ?
+                    new Rectangle(frameX / _XMLScale, frameY / _XMLScale, frameWidth / _XMLScale, frameHeight / _XMLScale) : null;
+
+            addRegion(name, region, frame);
+        }
+    }
+
+
+    parseAtlasXml方法改为：
+
+     protected function parseAtlasXml(atlasXml:XML):void {
+        var scale:Number = mAtlasTexture.scale;
+        var str:String = atlasXml.attribute("scale")
+        // 添加
+        if (str != "") {
+            _XMLScale = parseFloat(str);
+        }
+        else {
+            _XMLScale = 1.0;
+        }
+
+
+        for each (var subTexture:XML in atlasXml.SubTexture) {
+            var name:String = subTexture.attribute("name");
+            var x:Number = parseFloat(subTexture.attribute("x")) / scale;
+            var y:Number = parseFloat(subTexture.attribute("y")) / scale;
+            var width:Number = parseFloat(subTexture.attribute("width")) / scale;
+            var height:Number = parseFloat(subTexture.attribute("height")) / scale;
+            var frameX:Number = parseFloat(subTexture.attribute("frameX")) / scale;
+            var frameY:Number = parseFloat(subTexture.attribute("frameY")) / scale;
+            var frameWidth:Number = parseFloat(subTexture.attribute("frameWidth")) / scale;
+            var frameHeight:Number = parseFloat(subTexture.attribute("frameHeight")) / scale;
+
+            var region:Rectangle = new Rectangle(x, y, width, height);
+            var frame:Rectangle = frameWidth > 0 && frameHeight > 0 ?
+                    // 添加_XMLScale
+                    new Rectangle(frameX / _XMLScale, frameY / _XMLScale, frameWidth / _XMLScale, frameHeight / _XMLScale) : null;
+            addRegion(name, region, frame);
+        }
+
+         public function getTexture(name:String):Texture {
+        var region:Rectangle = mTextureRegions[name];
+
+        if (region == null) return null;
+        else return Texture.fromTexture(mAtlasTexture, region, mTextureFrames[name], _XMLScale);// 添加_XMLScale
+    }
+    }
+
+
+    11. Texture 类修改
+
+     public static function fromTexture(texture:Texture, region:Rectangle = null, frame:Rectangle = null, XMLScale:Number = 1.0):Texture {
+        var subTexture:Texture = new SubTexture(texture, region, XMLScale);
+        subTexture.mFrame = frame;
+        return subTexture;
+    }
+
+    empty  方法修改 return new SubTexture(concreteTexture, new Rectangle(0, 0, width, height),1.0, true);
+
+
+    12.SubTexture类修改
+  private var _XMLScale:Number = 1.0;
+
+   public function SubTexture(parentTexture:Texture, region:Rectangle, XMLScale:Number, ownsParent:Boolean = false) {
+        mParent = parentTexture;
+        mOwnsParent = ownsParent;
+
+        _XMLScale = XMLScale;              //修改
+
+           /** @inheritDoc */
+    public override function get width():Number { //修改
+        return mParent.width * mClipping.width / _XMLScale;
+    }
+
+    /** @inheritDoc */
+    public override function get height():Number {//修改
+        return mParent.height * mClipping.height / _XMLScale;
+    }
+
+
+    13.AssestManger purge  方法添加
+
+      for each (var bytes:ByteArray in mByteArrays) {
+            bytes.clear();
+        }
+
+         _dict = {};
+
+         private var _dict:Object = {};    // 去除重复加载
+
+14.AssetManager   enqueueWithName 方法添加
+// 去除重复加载
+        if (_dict[asset]) {
+            return null;
+        }
+        else {
+            _dict[asset] = true;
+        }
+
+15.  AssetManager  process方法添加extension参数
+        function process(asset:Object,extension:String):void {
+16.AssetManager  processRawAsset方法添加 xmlBytes:Vector.<ByteArray>参数
+
+        private function processRawAsset(name:String, rawAsset:Object, xmls:Vector.<XML>, xmlBytes:Vector.<ByteArray>, onProgress:Function, onComplete:Function):void {
+        var canceled:Boolean = false;
+
+
+17.AssetManager  processRawAsset修改
+
+else if (asset is ByteArray) {
+                bytes = asset as ByteArray;
+                if (extension == "scmlx") {
+                    asset.endian = Endian.LITTLE_ENDIAN;
+                    // AnimationCreator.instance.generationSCMLFromBytes(name, asset as ByteArray);
+                    addByteArray(name, asset as ByteArray);
+                    onComplete();
+                }
+                else if (extension == "xmld") {
+                    bytes.endian = Endian.LITTLE_ENDIAN;
+                    xmlBytes.push(bytes);
+                    onComplete();
+                }
+
+
+18.DisplayObjectContainer  dispose方法
+
+
+  if (this is IAnimatable) {
+            Starling.juggler.remove(this as IAnimatable);
+
+            if (this is SpriterClip) {
+                var spriterClip:SpriterClip = this as SpriterClip;
+                spriterClip.clearCallbacks();
+                spriterClip.animationComplete.removeAll();
+            }
+            }
+
+19.Starling  render
+
+
+            public function render():void
+        {
+            if(_autoSkip.requestFrameSkip()) return;
+            if (!contextValid)
+                return;
+            
+            makeCurrent();
+//            updateViewPort();
+//            updateNativeOverlay();
+            mSupport.nextFrame();
+            
+            if (!mShareContext)
+                RenderSupport.clear(mStage.color, 1.0);
+            
+//            var scaleX:Number = mViewPort.width  / mStage.stageWidth;
+//            var scaleY:Number = mViewPort.height / mStage.stageHeight;
+            
+            mContext.setDepthTest(false, Context3DCompareMode.ALWAYS);
+            mContext.setCulling(Context3DTriangleFace.NONE);
+            
+            mSupport.renderTarget = null; // back buffer
+           /* mSupport.setOrthographicProjection(
+         mViewPort.x < 0 ? -mViewPort.x / scaleX : 0.0,
+         mViewPort.y < 0 ? -mViewPort.y / scaleY : 0.0,
+         mClippedViewPort.width  / scaleX,
+         mClippedViewPort.height / scaleY);*/
+
+20.Starling构造方法
+
+ if (viewPort == null) viewPort = new Rectangle(0, 0, stage.fullScreenWidth, stage.fullScreenHeight);
+
+ 21.QuadBatch 类 添加静态变量  public static var   QuadBatchPool:Array = [];
+
+  compileObject 方法 两处创建QuadBatch
+ 使用缓存  if(QuadBatchPool.length > 0)
+                    {
+                        q = QuadBatchPool.pop();
+                    }
+                    else
+                    {
+                        q = new QuadBatch();
+                    }
+
+                    销毁时：
+
+                     for (i=quadBatches.length-1; i>quadBatchID; --i)
+                {
+                   var q:QuadBatch =  quadBatches.pop();
+                    q.reset();
+                    QuadBatchPool.push(q);
+                }
+
+
+22.Sprite  disposeFlattenedContents方法修改
+
+ private function disposeFlattenedContents():void
+        {
+            if (mFlattenedContents)
+            {
+                for (var i:int=0, max:int=mFlattenedContents.length; i<max; ++i)
+                {
+//                    mFlattenedContents[i].dispose();
+                    mFlattenedContents[i].reset();
+                    QuadBatch.QuadBatchPool.push( mFlattenedContents[i]);
+                }
+                
+                mFlattenedContents = null;
+            }
+        }

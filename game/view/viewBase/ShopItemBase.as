@@ -1,0 +1,171 @@
+package  game.view.viewBase
+{
+    import starling.display.Image;
+    import game.manager.AssetMgr;
+    import starling.display.Sprite;
+    import starling.textures.Texture;
+    import starling.text.TextField;
+    import starling.display.Button;
+    import flash.geom.Rectangle;
+    import com.utils.Constants;
+    import feathers.controls.TextInput;
+    import feathers.controls.renderers.DefaultListItemRenderer;
+
+    public class ShopItemBase extends DefaultListItemRenderer
+    {
+        public var num:TextField;
+        public var buy:Button;
+        public var goodsName:TextField;
+        public var cost:TextField;
+        public var costValue:TextField;
+        public var desc:TextField;
+        public var goodsIcon:Image;
+        public var container:Button;
+        public var count:TextField;
+
+        public function ShopItemBase()
+        {
+            var texture:Texture;
+            var textField:TextField;
+            var input_txt:TextInput;
+            var image:Image;
+            var button:Button;
+            var assetMgr:AssetMgr = AssetMgr.instance;
+            num = new TextField(39,28,'','',22,0x3E2E23,false);
+            num.touchable = false;
+            num.hAlign= 'center';
+            num.text= '×10';
+            num.x = 180;
+            num.y = 112;
+            this.addQuiackChild(num);
+            texture =assetMgr.getTexture('ui_shangcheng_fuhedi');
+            image = new Image(texture);
+            image.width = 135;
+            image.height = 319;
+            image.touchable = false;
+            image.smoothing= Constants.smoothing;
+            this.addQuiackChild(image);
+            texture =assetMgr.getTexture('ui_shangcheng_fuhedi');
+            image = new Image(texture);
+            image.x = 268;
+            image.width = 135;
+            image.height = 319;
+            image.scaleX = -1;
+            image.touchable = false;
+            image.smoothing= Constants.smoothing;
+            this.addQuiackChild(image);
+            texture = assetMgr.getTexture('ui_button_tiebaomutouanjian');
+            buy = new Button(texture);
+            buy.name= 'buy';
+            buy.x = 64;
+            buy.y = 307;
+            buy.width = 146;
+            buy.height = 64;
+            this.addQuiackChild(buy);
+            texture =assetMgr.getTexture('ui_gongyong_bumangdi_shangbianyikuaitie');
+            image = new Image(texture);
+            image.x = 94;
+            image.y = 303;
+            image.width = 30;
+            image.height = 21;
+            image.scaleX = -1;
+            image.touchable = false;
+            image.smoothing= Constants.smoothing;
+            this.addQuiackChild(image);
+            texture =assetMgr.getTexture('ui_gongyong_bumangdi_shangbianyikuaitie');
+            image = new Image(texture);
+            image.x = 175;
+            image.y = 303;
+            image.width = 30;
+            image.height = 21;
+            image.touchable = false;
+            image.smoothing= Constants.smoothing;
+            this.addQuiackChild(image);
+            texture =assetMgr.getTexture('ui_shangcheng_wenzi_goumai');
+            image = new Image(texture);
+            image.x = 93;
+            image.y = 311;
+            image.width = 80;
+            image.height = 45;
+            image.touchable = false;
+            image.smoothing= Constants.smoothing;
+            this.addQuiackChild(image);
+            goodsName = new TextField(177,33,'','',24,0x3E2E23,false);
+            goodsName.touchable = false;
+            goodsName.hAlign= 'center';
+            goodsName.text= '物品的名字';
+            goodsName.x = 46;
+            goodsName.y = 20;
+            this.addQuiackChild(goodsName);
+            cost = new TextField(71,36,'','',24,0x261811,false);
+            cost.touchable = false;
+            cost.hAlign= 'center';
+            cost.text= '消耗';
+            cost.x = 30;
+            cost.y = 247;
+            this.addQuiackChild(cost);
+            costValue = new TextField(104,36,'','',24,0xFF0000,false);
+            costValue.touchable = false;
+            costValue.hAlign= 'center';
+            costValue.text= '995245';
+            costValue.x = 126;
+            costValue.y = 247;
+            this.addQuiackChild(costValue);
+            desc = new TextField(227,87,'','',18,0x3E2E23,false);
+            desc.touchable = false;
+            desc.hAlign= 'left';
+            desc.text= '这里有一些文字叙述';
+            desc.x = 20;
+            desc.y = 147;
+            this.addQuiackChild(desc);
+            texture =assetMgr.getTexture('ui_gongyong_90wupingkuang');
+            image = new Image(texture);
+            image.x = 89;
+            image.y = 55;
+            image.width = 90;
+            image.height = 90;
+            image.touchable = false;
+            image.smoothing= Constants.smoothing;
+            this.addQuiackChild(image);
+            texture = assetMgr.getTexture('icon_1204')
+            goodsIcon = new Image(texture);
+            goodsIcon.x = 90;
+            goodsIcon.y = 55;
+            goodsIcon.width = 89;
+            goodsIcon.height = 89;
+            this.addQuiackChild(goodsIcon);
+            goodsIcon.touchable = false;
+            texture = assetMgr.getTexture('ui_gongyong_90wupingkuang0');
+            container = new Button(texture);
+            container.name= 'container';
+            container.x = 89;
+            container.y = 55;
+            container.width = 90;
+            container.height = 90;
+            this.addQuiackChild(container);
+            texture =assetMgr.getTexture('ui_gongyong_zuanshi');
+            image = new Image(texture);
+            image.x = 91;
+            image.y = 240;
+            image.width = 46;
+            image.height = 44;
+            image.touchable = false;
+            image.smoothing= Constants.smoothing;
+            this.addQuiackChild(image);
+            count = new TextField(233,26,'','',18,0xFFFFFF,false);
+            count.touchable = false;
+            count.hAlign= 'center';
+            count.text= 'X10';
+            count.x = 16;
+            count.y = 117;
+            this.addQuiackChild(count);
+        }
+        override public function dispose():void
+        {
+            buy.dispose();
+            container.dispose();
+            super.dispose();
+        
+}
+    }
+}

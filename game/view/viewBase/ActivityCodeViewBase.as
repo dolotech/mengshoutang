@@ -1,0 +1,163 @@
+package  game.view.viewBase
+{
+    import starling.display.Image;
+    import game.manager.AssetMgr;
+    import starling.display.Sprite;
+    import starling.textures.Texture;
+    import starling.text.TextField;
+    import starling.display.Button;
+    import flash.geom.Rectangle;
+    import com.utils.Constants;
+    import feathers.controls.TextInput;
+    import feathers.display.Scale9Image;
+    import feathers.textures.Scale9Textures;
+    import feathers.controls.TextInput;
+    import com.view.View;
+
+    public class ActivityCodeViewBase extends View
+    {
+        public var ui_Setup_button_switch341122:Scale9Image;
+        public var btn_ok:Button;
+        public var txt_des:TextField;
+        public var txt_title:TextField;
+        public var txt_input:TextInput;
+
+        public function ActivityCodeViewBase()
+        {
+            super(false);
+            var texture:Texture;
+            var textField:TextField;
+            var input_txt:TextInput;
+            var image:Image;
+            var button:Button;
+            var assetMgr:AssetMgr = AssetMgr.instance;
+            texture =assetMgr.getTexture('ui_wudixingyunxing_xingxing_goumaikuang1');
+            image = new Image(texture);
+            image.y = 46;
+            image.width = 102;
+            image.height = 391;
+            image.smoothing= Constants.NONE;
+            this.addQuiackChild(image);
+            texture =assetMgr.getTexture('ui_wudixingyunxing_xingxing_goumaikuang2');
+            image = new Image(texture);
+            image.x = 87;
+            image.y = 46;
+            image.width = 415;
+            image.height = 391;
+            image.smoothing= Constants.NONE;
+            this.addQuiackChild(image);
+            texture =assetMgr.getTexture('ui_wudixingyunxing_xingxing_goumaikuang1');
+            image = new Image(texture);
+            image.x = 590;
+            image.y = 46;
+            image.width = 102;
+            image.height = 391;
+            image.scaleX = -1;
+            image.smoothing= Constants.NONE;
+            this.addQuiackChild(image);
+            texture = assetMgr.getTexture('ui_Setup_button_switch3');
+            var ui_Setup_button_switch341122Rect:Rectangle = new Rectangle(54,26,107,52);
+            var ui_Setup_button_switch3411229ScaleTexture:Scale9Textures = new Scale9Textures(texture,ui_Setup_button_switch341122Rect);
+            ui_Setup_button_switch341122 = new Scale9Image(ui_Setup_button_switch3411229ScaleTexture);
+            ui_Setup_button_switch341122.x = 41;
+            ui_Setup_button_switch341122.y = 122;
+            ui_Setup_button_switch341122.width = 506;
+            ui_Setup_button_switch341122.height = 217;
+            this.addQuiackChild(ui_Setup_button_switch341122);
+            texture =assetMgr.getTexture('ui_yingxiongkapai_yingxiongmingdi');
+            image = new Image(texture);
+            image.x = 169;
+            image.y = 41;
+            image.width = 255;
+            image.height = 59;
+            image.touchable = false;
+            image.smoothing= Constants.smoothing;
+            this.addQuiackChild(image);
+            texture =assetMgr.getTexture('ui_gongyong_mulianpaizi_lianzi_xiao');
+            image = new Image(texture);
+            image.x = 97;
+            image.width = 21;
+            image.height = 76;
+            image.touchable = false;
+            image.smoothing= Constants.smoothing;
+            this.addQuiackChild(image);
+            texture =assetMgr.getTexture('ui_gongyong_mulianpaizi_liantou');
+            image = new Image(texture);
+            image.x = 78;
+            image.y = 46;
+            image.width = 51;
+            image.height = 39;
+            image.touchable = false;
+            image.smoothing= Constants.smoothing;
+            this.addQuiackChild(image);
+            texture =assetMgr.getTexture('ui_gongyong_mulianpaizi_lianzi_xiao');
+            image = new Image(texture);
+            image.x = 472;
+            image.width = 21;
+            image.height = 76;
+            image.touchable = false;
+            image.smoothing= Constants.smoothing;
+            this.addQuiackChild(image);
+            texture =assetMgr.getTexture('ui_gongyong_mulianpaizi_liantou');
+            image = new Image(texture);
+            image.x = 458;
+            image.y = 46;
+            image.width = 51;
+            image.height = 39;
+            image.touchable = false;
+            image.smoothing= Constants.smoothing;
+            this.addQuiackChild(image);
+            texture =assetMgr.getTexture('ui_yonghuzhuce_wenbentiao');
+            image = new Image(texture);
+            image.x = 147;
+            image.y = 169;
+            image.width = 311;
+            image.height = 48;
+            image.touchable = false;
+            image.smoothing= Constants.smoothing;
+            this.addQuiackChild(image);
+            texture = assetMgr.getTexture('ui_button_tiebaomutouanjian');
+            btn_ok = new Button(texture);
+            btn_ok.name= 'btn_ok';
+            btn_ok.x = 233;
+            btn_ok.y = 355;
+            btn_ok.width = 160;
+            btn_ok.height = 66;
+            this.addQuiackChild(btn_ok);
+            btn_ok.text= '领取';
+            btn_ok.fontColor= 0xFFFFCC;
+            btn_ok.fontSize= 30;
+            txt_des = new TextField(501,35,'','',24,0xFFFFCC,false);
+            txt_des.touchable = false;
+            txt_des.hAlign= 'center';
+            txt_des.text= '请输入或粘贴礼包兑换码';
+            txt_des.x = 45;
+            txt_des.y = 259;
+            this.addQuiackChild(txt_des);
+            txt_title = new TextField(235,35,'','',26,0xFFFFCC,false);
+            txt_title.touchable = false;
+            txt_title.hAlign= 'center';
+            txt_title.text= '礼包兑换处';
+            txt_title.x = 183;
+            txt_title.y = 50;
+            this.addQuiackChild(txt_title);
+            txt_input = new TextInput();
+            txt_input.textEditorProperties.fontSize = 24;
+            txt_input.text = '';
+            txt_input.textEditorProperties.color = 0xFFFFCC;
+            txt_input.x = 165;
+            txt_input.y = 179;
+            txt_input.width = 278;
+            txt_input.height = 28;
+            this.addQuiackChild(txt_input);
+            init();
+        }
+        override public function dispose():void
+        {
+            btn_ok.dispose();
+            txt_input.dispose();
+            super.dispose();
+        
+}
+    }
+}

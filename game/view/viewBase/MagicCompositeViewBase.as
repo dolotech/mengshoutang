@@ -1,0 +1,206 @@
+package game.view.viewBase {
+    import com.utils.Constants;
+    import com.view.View;
+
+    import feathers.controls.List;
+    import feathers.controls.TextInput;
+
+    import game.manager.AssetMgr;
+
+    import starling.display.Button;
+    import starling.display.Image;
+    import starling.text.TextField;
+    import starling.textures.Texture;
+
+    public class MagicCompositeViewBase extends View {
+        public var list_magicLevel:List;
+        public var list_magic:List;
+        public var needNumber:Image;
+        public var needNumberIco:Image;
+        public var txt_Need:TextField;
+        public var btn_Reform:Button;
+        public var txt_Rule:TextField;
+        public var txt_Prompt:TextField;
+        public var txt_SuccessRate:TextField;
+        public var txt_Diamond:TextField;
+        public var btn_batch:Button;
+        public var txt_siphon:TextField;
+        public var nextQuality:Image;
+        public var nextQualityIco:Image;
+        public var txt_reform:TextField;
+
+        public function MagicCompositeViewBase() {
+            super(false);
+            var texture:Texture;
+            var textField:TextField;
+            var input_txt:TextInput;
+            var image:Image;
+            var button:Button;
+            var assetMgr:AssetMgr = AssetMgr.instance;
+            list_magicLevel = new List();
+            list_magicLevel.x = 47;
+            list_magicLevel.y = 85;
+            list_magicLevel.width = 110;
+            list_magicLevel.height = 385;
+            this.addQuiackChild(list_magicLevel);
+            list_magic = new List();
+            list_magic.x = 166;
+            list_magic.y = 85;
+            list_magic.width = 720;
+            list_magic.height = 290;
+            this.addQuiackChild(list_magic);
+            texture = assetMgr.getTexture('ui_text_chenggonglv');
+            image = new Image(texture);
+            image.x = 493;
+            image.y = 525;
+            image.width = 78;
+            image.height = 27;
+            image.touchable = false;
+            image.smoothing = Constants.smoothing;
+            this.addQuiackChild(image);
+            texture = assetMgr.getTexture('ui_gongyong_zuanshi');
+            image = new Image(texture);
+            image.x = 495;
+            image.y = 571;
+            image.width = 46;
+            image.height = 44;
+            image.touchable = false;
+            image.smoothing = Constants.smoothing;
+            this.addQuiackChild(image);
+            texture = assetMgr.getTexture('ui_gongyong_90wupingkuang');
+            image = new Image(texture);
+            image.x = 84;
+            image.y = 521;
+            image.width = 90;
+            image.height = 90;
+            image.touchable = false;
+            image.smoothing = Constants.smoothing;
+            this.addQuiackChild(image);
+            texture = assetMgr.getTexture('ui_gongyong_90wupingkuang0')
+            needNumber = new Image(texture);
+            needNumber.x = 84;
+            needNumber.y = 521;
+            needNumber.width = 90;
+            needNumber.height = 90;
+            this.addQuiackChild(needNumber);
+            needNumber.touchable = false;
+            texture = assetMgr.getTexture('icon_1208')
+            needNumberIco = new Image(texture);
+            needNumberIco.x = 84;
+            needNumberIco.y = 521;
+            needNumberIco.width = 89;
+            needNumberIco.height = 89;
+            this.addQuiackChild(needNumberIco);
+            needNumberIco.touchable = false;
+            txt_Need = new TextField(53, 34, '', '', 21, 0x66FF00, false);
+            txt_Need.touchable = false;
+            txt_Need.hAlign = 'center';
+            txt_Need.text = '';
+            txt_Need.x = 116;
+            txt_Need.y = 574;
+            this.addQuiackChild(txt_Need);
+            texture = assetMgr.getTexture('ui_button_tiebaomutouanjian');
+            btn_Reform = new Button(texture);
+            btn_Reform.name = 'btn_Reform';
+            btn_Reform.x = 755;
+            btn_Reform.y = 535;
+            btn_Reform.width = 150;
+            btn_Reform.height = 64;
+            this.addQuiackChild(btn_Reform);
+            txt_Rule = new TextField(572, 30, '', '', 20, 0xF0952C, false);
+            txt_Rule.touchable = false;
+            txt_Rule.hAlign = 'left';
+            txt_Rule.text = '';
+            txt_Rule.x = 203;
+            txt_Rule.y = 388;
+            this.addQuiackChild(txt_Rule);
+            txt_Prompt = new TextField(572, 30, '', '', 20, 0xF0952C, false);
+            txt_Prompt.touchable = false;
+            txt_Prompt.hAlign = 'left';
+            txt_Prompt.text = '';
+            txt_Prompt.x = 203;
+            txt_Prompt.y = 432;
+            this.addQuiackChild(txt_Prompt);
+            txt_SuccessRate = new TextField(104, 36, '', '', 24, 0xFCFEA3, false);
+            txt_SuccessRate.touchable = false;
+            txt_SuccessRate.hAlign = 'left';
+            txt_SuccessRate.text = '';
+            txt_SuccessRate.x = 579;
+            txt_SuccessRate.y = 522;
+            this.addQuiackChild(txt_SuccessRate);
+            txt_Diamond = new TextField(123, 44, '', '', 28, 0xFCFEA3, false);
+            txt_Diamond.touchable = false;
+            txt_Diamond.hAlign = 'left';
+            txt_Diamond.text = '';
+            txt_Diamond.x = 543;
+            txt_Diamond.y = 572;
+            this.addQuiackChild(txt_Diamond);
+            texture = assetMgr.getTexture('ui_zhuangshi_baozhuhuoqu_jiantou1');
+            image = new Image(texture);
+            image.x = 224;
+            image.y = 551;
+            image.width = 37;
+            image.height = 33;
+            image.touchable = false;
+            image.smoothing = Constants.smoothing;
+            this.addQuiackChild(image);
+            texture = assetMgr.getTexture('ui_butten_sifanganniu');
+            btn_batch = new Button(texture);
+            btn_batch.name = 'btn_batch';
+            btn_batch.x = 795;
+            btn_batch.y = 379;
+            btn_batch.width = 91;
+            btn_batch.height = 93;
+            this.addQuiackChild(btn_batch);
+            txt_siphon = new TextField(63, 69, '', '', 24, 0xFFFFCC, false);
+            txt_siphon.touchable = false;
+            txt_siphon.hAlign = 'center';
+            txt_siphon.text = '';
+            txt_siphon.x = 808;
+            txt_siphon.y = 389;
+            this.addQuiackChild(txt_siphon);
+            texture = assetMgr.getTexture('ui_gongyong_90wupingkuang');
+            image = new Image(texture);
+            image.x = 309;
+            image.y = 521;
+            image.width = 90;
+            image.height = 90;
+            image.touchable = false;
+            image.smoothing = Constants.smoothing;
+            this.addQuiackChild(image);
+            texture = assetMgr.getTexture('ui_gongyong_90wupingkuang0')
+            nextQuality = new Image(texture);
+            nextQuality.x = 309;
+            nextQuality.y = 521;
+            nextQuality.width = 90;
+            nextQuality.height = 90;
+            this.addQuiackChild(nextQuality);
+            nextQuality.touchable = false;
+            texture = assetMgr.getTexture('icon_1208')
+            nextQualityIco = new Image(texture);
+            nextQualityIco.x = 309;
+            nextQualityIco.y = 521;
+            nextQualityIco.width = 89;
+            nextQualityIco.height = 89;
+            this.addQuiackChild(nextQualityIco);
+            nextQualityIco.touchable = false;
+            txt_reform = new TextField(140, 41, '', '', 28, 0xFFFFCC, false);
+            txt_reform.touchable = false;
+            txt_reform.hAlign = 'center';
+            txt_reform.text = '';
+            txt_reform.x = 760;
+            txt_reform.y = 546;
+            this.addQuiackChild(txt_reform);
+            init();
+        }
+
+        override public function dispose():void {
+            list_magicLevel.dispose();
+            list_magic.dispose();
+            btn_Reform.dispose();
+            btn_batch.dispose();
+            super.dispose();
+
+        }
+    }
+}

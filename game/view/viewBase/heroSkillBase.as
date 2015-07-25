@@ -1,0 +1,170 @@
+package  game.view.viewBase
+{
+    import starling.display.Image;
+    import game.manager.AssetMgr;
+    import starling.display.Sprite;
+    import starling.textures.Texture;
+    import starling.text.TextField;
+    import starling.display.Button;
+    import flash.geom.Rectangle;
+    import com.utils.Constants;
+    import feathers.controls.TextInput;
+    import com.dialog.Dialog;
+
+    public class heroSkillBase extends Dialog
+    {
+        public var text_heroName:TextField;
+        public var text_expert:TextField;
+        public var text_HabitWeapon:TextField;
+        public var text_heroPresent:TextField;
+        public var text_heroInfo:TextField;
+        public var text_heroSkill:TextField;
+        public var text_expertValue:TextField;
+        public var text_HabitWeaponValue:TextField;
+        public var heroIcon:Image;
+        public var heroSkill_1:Button;
+        public var heroSkill_0:Button;
+        public var heroSkill_2:Button;
+
+        public function heroSkillBase()
+        {
+            super(false);
+            var texture:Texture;
+            var textField:TextField;
+            var input_txt:TextInput;
+            var image:Image;
+            var button:Button;
+            var assetMgr:AssetMgr = AssetMgr.instance;
+            texture =assetMgr.getTexture('ui_wudixingyunxing_xingxing_goumaikuang1');
+            image = new Image(texture);
+            image.width = 102;
+            image.height = 391;
+            image.touchable = false;
+            image.smoothing= Constants.smoothing;
+            this.addQuiackChild(image);
+            texture =assetMgr.getTexture('ui_wudixingyunxing_xingxing_goumaikuang2');
+            image = new Image(texture);
+            image.x = 94;
+            image.width = 373;
+            image.height = 391;
+            image.touchable = false;
+            image.smoothing= Constants.smoothing;
+            this.addQuiackChild(image);
+            texture =assetMgr.getTexture('ui_wudixingyunxing_xingxing_goumaikuang1');
+            image = new Image(texture);
+            image.x = 561;
+            image.width = 102;
+            image.height = 391;
+            image.scaleX = -1;
+            image.touchable = false;
+            image.smoothing= Constants.smoothing;
+            this.addQuiackChild(image);
+            texture =assetMgr.getTexture('ui_atlas_bottom');
+            image = new Image(texture);
+            image.x = 79;
+            image.y = 55;
+            image.width = 108;
+            image.height = 112;
+            image.touchable = false;
+            image.smoothing= Constants.smoothing;
+            this.addQuiackChild(image);
+            text_heroName = new TextField(148,31,'','',24,0xFFFFCC,false);
+            text_heroName.touchable = false;
+            text_heroName.hAlign= 'center';
+            text_heroName.text= '英雄名';
+            text_heroName.x = 60;
+            text_heroName.y = 178;
+            this.addQuiackChild(text_heroName);
+            text_expert = new TextField(120,31,'','',24,0xFFFFCC,false);
+            text_expert.touchable = false;
+            text_expert.hAlign= 'left';
+            text_expert.text= '擅长位置:';
+            text_expert.x = 25;
+            text_expert.y = 229;
+            this.addQuiackChild(text_expert);
+            text_HabitWeapon = new TextField(122,31,'','',24,0xFFFFCC,false);
+            text_HabitWeapon.touchable = false;
+            text_HabitWeapon.hAlign= 'left';
+            text_HabitWeapon.text= '惯用武器:';
+            text_HabitWeapon.x = 25;
+            text_HabitWeapon.y = 271;
+            this.addQuiackChild(text_HabitWeapon);
+            text_heroPresent = new TextField(148,31,'','',24,0xCCFF00,false);
+            text_heroPresent.touchable = false;
+            text_heroPresent.hAlign= 'center';
+            text_heroPresent.text= '英雄介绍';
+            text_heroPresent.x = 315;
+            text_heroPresent.y = 34;
+            this.addQuiackChild(text_heroPresent);
+            text_heroInfo = new TextField(307,143,'','',23,0xFFFFCC,false);
+            text_heroInfo.touchable = false;
+            text_heroInfo.hAlign= 'left';
+            text_heroInfo.text= '啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊';
+            text_heroInfo.x = 240;
+            text_heroInfo.y = 75;
+            this.addQuiackChild(text_heroInfo);
+            text_heroSkill = new TextField(148,31,'','',24,0x00FF33,false);
+            text_heroSkill.touchable = false;
+            text_heroSkill.hAlign= 'center';
+            text_heroSkill.text= '英雄技能';
+            text_heroSkill.x = 318;
+            text_heroSkill.y = 224;
+            this.addQuiackChild(text_heroSkill);
+            text_expertValue = new TextField(104,31,'','',24,0xFFFFCC,false);
+            text_expertValue.touchable = false;
+            text_expertValue.hAlign= 'left';
+            text_expertValue.text= '擅长位置';
+            text_expertValue.x = 135;
+            text_expertValue.y = 229;
+            this.addQuiackChild(text_expertValue);
+            text_HabitWeaponValue = new TextField(104,31,'','',24,0xFFFFCC,false);
+            text_HabitWeaponValue.touchable = false;
+            text_HabitWeaponValue.hAlign= 'left';
+            text_HabitWeaponValue.text= '擅长位置';
+            text_HabitWeaponValue.x = 135;
+            text_HabitWeaponValue.y = 272;
+            this.addQuiackChild(text_HabitWeaponValue);
+            texture = assetMgr.getTexture('photo_504')
+            heroIcon = new Image(texture);
+            heroIcon.x = 82;
+            heroIcon.y = 61;
+            heroIcon.width = 100;
+            heroIcon.height = 100;
+            this.addQuiackChild(heroIcon);
+            heroIcon.touchable = false;
+            texture = assetMgr.getTexture('icon_skill_1');
+            heroSkill_1 = new Button(texture);
+            heroSkill_1.name= 'heroSkill_1';
+            heroSkill_1.x = 358;
+            heroSkill_1.y = 269;
+            heroSkill_1.width = 80;
+            heroSkill_1.height = 80;
+            this.addQuiackChild(heroSkill_1);
+            texture = assetMgr.getTexture('icon_skill_1');
+            heroSkill_0 = new Button(texture);
+            heroSkill_0.name= 'heroSkill_0';
+            heroSkill_0.x = 261;
+            heroSkill_0.y = 269;
+            heroSkill_0.width = 80;
+            heroSkill_0.height = 80;
+            this.addQuiackChild(heroSkill_0);
+            texture = assetMgr.getTexture('icon_skill_1');
+            heroSkill_2 = new Button(texture);
+            heroSkill_2.name= 'heroSkill_2';
+            heroSkill_2.x = 456;
+            heroSkill_2.y = 269;
+            heroSkill_2.width = 80;
+            heroSkill_2.height = 80;
+            this.addQuiackChild(heroSkill_2);
+            init();
+        }
+        override public function dispose():void
+        {
+            heroSkill_1.dispose();
+            heroSkill_0.dispose();
+            heroSkill_2.dispose();
+            super.dispose();
+        
+}
+    }
+}
